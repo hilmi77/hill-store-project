@@ -1,14 +1,16 @@
-import { useInfiniteQuery } from "react-query";
-import { fetchProductsPage } from "../api/api";
+// hooks/useProductsPage.ts
 
-export const useProductsPage = () => {
-  return useInfiniteQuery("products", fetchProductsPage, {
+import { useInfiniteQuery } from 'react-query';
+import { fetchProductsPage } from '../api/api';
+
+export const useProductsPage = (category: string) => {
+  return useInfiniteQuery(['products', category], ({ pageParam = 1 }) => fetchProductsPage({ pageParam, category }), {
     getNextPageParam: (lastPage, pages) => {
-     if(pages.length<lastPage.totalPages) {
+      if (pages.length < lastPage.totalPages) {
         return lastPage.nextPage;
-     }else {
+      } else {
         return undefined;
-     }
+      }
     },
-  })
-}
+  });
+};
