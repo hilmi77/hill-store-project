@@ -1,7 +1,4 @@
-// components/HeaderCategories.tsx
-import React from "react";
-import { useCategories } from "../hooks/useCategories"; // Önceki adımda oluşturduğunuz hook
-
+import { useCategories } from "../hooks/useCategories";
 const HeaderCategories = ({
   onCategorySelect,
 }: {
@@ -9,7 +6,14 @@ const HeaderCategories = ({
 }) => {
   const { data: categories, isLoading, isError } = useCategories();
 
-  if (isLoading) return <div>Loading categories...</div>;
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-blue-500"></div>
+      </div>
+    );
+  }
+
   if (isError) return <div>Error loading categories.</div>;
 
   return (
