@@ -3,8 +3,6 @@ import { useProductsPage } from "../hooks/useProductsPage";
 import { Link } from "react-router-dom";
 import { FaRegHeart, FaStar, FaRegStar } from "react-icons/fa";
 import HeaderCategories from "../components/HeaderCategories";
-import { useDispatch } from "react-redux";
-import { addFavorite } from "../features/favorites/favoritesSlice";
 
 type Product = {
   id: number;
@@ -19,7 +17,7 @@ type Product = {
 
 const ProductList = () => {
   const [category, setCategory] = React.useState<string>("All");
-  const dispatch = useDispatch();
+
   const { data, fetchNextPage, hasNextPage, isLoading, isError } =
     useProductsPage(category);
 
@@ -55,7 +53,6 @@ const ProductList = () => {
   }
 
   const handleAddToFavorites = (product: Product) => {
-    dispatch(addFavorite(product));
     console.log("Added to favorites:", product);
   };
 

@@ -12,10 +12,10 @@ const Navbar: React.FC = () => {
           <img src={logo} alt="Logo" className="h-10 w-[80px]" />
         </Link>
         <div className="hidden md:flex space-x-4">
-          <Link to="/favorites" className="hover:underline">
+          <Link to="#" className="hover:underline">
             Favoriler
           </Link>
-          <Link to="/cart" className="hover:underline">
+          <Link to="#" className="hover:underline">
             Alışveriş Sepeti
           </Link>
         </div>
