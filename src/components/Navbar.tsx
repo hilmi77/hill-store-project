@@ -12,7 +12,7 @@ const Navbar: React.FC = () => {
           <img src={logo} alt="Logo" className="h-10 w-[80px]" />
         </Link>
         <div className="hidden md:flex space-x-4">
-          <Link to="#" className="hover:underline">
+          <Link to="/favoriler" className="hover:underline">
             Favoriler
           </Link>
           <Link to="#" className="hover:underline">
