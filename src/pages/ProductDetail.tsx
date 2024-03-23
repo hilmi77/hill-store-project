@@ -40,7 +40,7 @@ const ProductDetail = () => {
 
   return (
     <div className="flex justify-center mt-10 p-4">
-      <div className="w-[700px] max-w-4xl border rounded-lg overflow-hidden shadow-lg bg-white flex flex-col md:flex-row">
+      <div className="w-full max-w-4xl border rounded-lg overflow-hidden shadow-lg bg-white flex flex-col md:flex-row">
         <div className="md:w-1/2 relative">
           <img
             src={product?.image}
