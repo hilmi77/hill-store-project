@@ -90,7 +90,9 @@ const ProductList = () => {
                       {product.title}
                     </h3>
                     <div className="flex flex-col mb-3">
-                      <p className="font-sans">{product.price} $</p>
+                      <p className="from-neutral-600">
+                        {product.price} <span className="font-normal">$</span>
+                      </p>
                       {/* Dinamik olarak rating.rate değerine göre yıldızları render ediyoruz */}
                       {renderRating(product.rating.rate)}
                     </div>

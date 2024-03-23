@@ -24,7 +24,7 @@ const HeaderCategories = ({
           className="px-3 py-1 text-sm text-gray-700 rounded-lg hover:bg-gray-100 mb-2 md:mb-0"
           onClick={() => onCategorySelect(category)}
         >
-          {category}
+          {category.toUpperCase()}
         </button>
       ))}
     </div>
