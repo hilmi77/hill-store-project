@@ -1,12 +1,19 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  addFavorite,
+  removeFavorite,
+} from "../features/favorites/favoritesSlice";
+import { RootState } from "../app/store";
 import { useProductsPage } from "../hooks/useProductsPage";
 import { Link } from "react-router-dom";
-import { FaRegHeart, FaStar, FaRegStar } from "react-icons/fa";
+import { FaRegHeart, FaStar, FaRegStar, FaHeart } from "react-icons/fa";
 import HeaderCategories from "../components/HeaderCategories";
 
 type Product = {
   id: number;
   title: string;
+  descritpion?: string;
   price: number;
   image: string;
   rating: {
@@ -15,11 +22,27 @@ type Product = {
   };
 };
 
-const ProductList = () => {
-  const [category, setCategory] = React.useState<string>("All");
+const isFavorite = (product: Product, favorites: Product[]) => {
+  return favorites.some((fav) => fav.id === product.id);
+};
 
+const ProductList = () => {
+  const dispatch = useDispatch();
+  const favorites = useSelector((state: RootState) => state.favorites.value);
+
+  const [category, setCategory] = React.useState<string>("All");
   const { data, fetchNextPage, hasNextPage, isLoading, isError } =
     useProductsPage(category);
+
+  const handleFavoriteToggle = (product: Product) => {
+    if (isFavorite(product, favorites)) {
+      dispatch(removeFavorite(product.id));
+    } else {
+      dispatch(addFavorite(product));
+    }
+  };
+
+  console.log("favorites", favorites);
 
   const handleCategoryChange = (category: string) => {
     setCategory(category);
@@ -52,10 +75,6 @@ const ProductList = () => {
     return <div>Error</div>;
   }
 
-  const handleAddToFavorites = (product: Product) => {
-    console.log("Added to favorites:", product);
-  };
-
   return (
     <div>
       <HeaderCategories onCategorySelect={handleCategoryChange} />
@@ -74,10 +93,15 @@ const ProductList = () => {
                       margin: "10px",
                       background: "rgba(255, 255, 255, 0.6)",
                     }}
-                    onClick={() => handleAddToFavorites(product)}
+                    onClick={() => handleFavoriteToggle(product)}
                   >
-                    <FaRegHeart className="text-xl text-gray-800" />
+                    {isFavorite(product, favorites) ? (
+                      <FaHeart className="text-xl text-red-500" /> // Favorilerdeyse dolu kalp
+                    ) : (
+                      <FaRegHeart className="text-xl text-gray-800" /> // Favorilerde değilse boş kalp
+                    )}
                   </button>
+
                   <Link to={`/products/${product.id}`}>
                     <img
                       src={product.image}

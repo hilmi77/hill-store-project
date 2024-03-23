@@ -1,9 +1,35 @@
-import React from "react";
 import { useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  addFavorite,
+  removeFavorite,
+} from "../features/favorites/favoritesSlice";
+import { RootState } from "../app/store";
 import { useProductDetails } from "../hooks/useProductDetails";
-import { FaStar, FaRegStar, FaRegHeart } from "react-icons/fa";
+import { FaStar, FaRegStar, FaRegHeart, FaHeart } from "react-icons/fa";
+
+type ProductDetailType = {
+  id: number;
+  title: string;
+  description?: string;
+  price: number;
+  image: string;
+  rating: {
+    rate: number;
+    count: number;
+  };
+};
+
+const isFavorite = (
+  product: ProductDetailType,
+  favorites: ProductDetailType[]
+) => {
+  return favorites.some((fav) => fav.id === product.id);
+};
 
 const ProductDetail = () => {
+  const dispatch = useDispatch();
+  const favorites = useSelector((state: RootState) => state.favorites.value);
   const { productId } = useParams();
 
   const {
@@ -11,6 +37,14 @@ const ProductDetail = () => {
     isLoading,
     isError,
   } = useProductDetails(Number(productId));
+
+  const handleFavoriteToggle = (product: ProductDetailType) => {
+    if (isFavorite(product, favorites)) {
+      dispatch(removeFavorite(product.id));
+    } else {
+      dispatch(addFavorite(product));
+    }
+  };
 
   const renderRating = (rate: number) => {
     const stars = [];
@@ -48,10 +82,15 @@ const ProductDetail = () => {
             className="w-full h-full object-cover transition duration-500 hover:scale-110"
           />
           <button
-            className="absolute top-0 right-0 m-4"
-            onClick={() => console.log("Added to favorites:", product?.id)}
+            className="absolute top-0 right-0 p-2 bg-white rounded-full"
+            style={{ margin: "10px", background: "rgba(255, 255, 255, 0.6)" }}
+            onClick={() => handleFavoriteToggle(product)}
           >
-            <FaRegHeart className="text-xl text-gray-800" />
+            {isFavorite(product, favorites) ? (
+              <FaHeart className="text-xl text-red-500" />
+            ) : (
+              <FaRegHeart className="text-xl text-gray-800" />
+            )}
           </button>
         </div>
         <div className="p-8 md:w-1/2 flex flex-col justify-between">
