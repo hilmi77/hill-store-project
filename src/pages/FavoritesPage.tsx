@@ -1,4 +1,3 @@
-import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { removeFavorite } from "../features/favorites/favoritesSlice";
 import { RootState } from "../app/store";
