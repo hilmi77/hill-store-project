@@ -4,7 +4,7 @@ import { RootState } from "../app/store";
 import { Link } from "react-router-dom";
 
 function FavoritesPage() {
-  const favorites = useSelector((state: RootState) => state.favorites.value);
+  const favorites = useSelector((state: RootState) => state.favorites.value); //store'dan favorileri alır
   const dispatch = useDispatch();
   return (
     <div className="container mx-auto p-4">

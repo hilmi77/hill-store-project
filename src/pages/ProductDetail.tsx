@@ -19,7 +19,7 @@ type ProductDetailType = {
     count: number;
   };
 };
-
+// Favorilerde ürünün olup olmadığını kontrol eden fonksiyon
 const isFavorite = (
   product: ProductDetailType,
   favorites: ProductDetailType[]
@@ -29,7 +29,7 @@ const isFavorite = (
 
 const ProductDetail = () => {
   const dispatch = useDispatch();
-  const favorites = useSelector((state: RootState) => state.favorites.value);
+  const favorites = useSelector((state: RootState) => state.favorites.value); //store'dan favorileri alır
   const { productId } = useParams();
 
   const {
@@ -37,6 +37,7 @@ const ProductDetail = () => {
     isLoading,
     isError,
   } = useProductDetails(Number(productId));
+  console.log("product", product);
 
   const handleFavoriteToggle = (product: ProductDetailType) => {
     if (isFavorite(product, favorites)) {
@@ -45,7 +46,7 @@ const ProductDetail = () => {
       dispatch(addFavorite(product));
     }
   };
-
+  // Rating yıldızlarını oluşturan fonksiyon
   const renderRating = (rate: number) => {
     const stars = [];
     for (let i = 1; i <= 5; i++) {

@@ -22,17 +22,18 @@ type Product = {
   };
 };
 
+//favorilerde olup olmadıgına bakmak için fonksiyon
 const isFavorite = (product: Product, favorites: Product[]) => {
   return favorites.some((fav) => fav.id === product.id);
 };
 
 const ProductList = () => {
   const dispatch = useDispatch();
-  const favorites = useSelector((state: RootState) => state.favorites.value);
+  const favorites = useSelector((state: RootState) => state.favorites.value); //favorileri almak için
 
   const [category, setCategory] = React.useState<string>("All");
   const { data, fetchNextPage, hasNextPage, isLoading, isError } =
-    useProductsPage(category);
+    useProductsPage(category); //useProductsPage hook'unu kullanarak ürünleri çekiyoruz
 
   const handleFavoriteToggle = (product: Product) => {
     if (isFavorite(product, favorites)) {
@@ -41,9 +42,11 @@ const ProductList = () => {
       dispatch(addFavorite(product));
     }
   };
+  console.log("data", data);
 
   console.log("favorites", favorites);
 
+  // Kategori değiştiğinde çalışacak fonksiyon
   const handleCategoryChange = (category: string) => {
     setCategory(category);
   };
